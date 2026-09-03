@@ -421,7 +421,7 @@ button {
 }
 
 .servicos-imagem.trocando img {
-    opacity: 0.25;
+    opacity: 0.2;
 }
 
 .servicos-imagem-legenda {
@@ -432,7 +432,8 @@ button {
 
     color: #ffffff;
 
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+    text-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.65);
 }
 
 .servicos-imagem-legenda span {
@@ -454,7 +455,7 @@ button {
 }
 
 
-/* LISTA DE SERVIÇOS */
+/* LISTA */
 
 .servicos-lista {
     border-top: 1px solid #cfcfcf;
@@ -475,7 +476,10 @@ button {
 
     cursor: pointer;
 
-    transition: 0.25s;
+    transition:
+        padding 0.25s,
+        background 0.25s,
+        color 0.25s;
 }
 
 .servico-linha:hover,
@@ -523,7 +527,7 @@ button {
 }
 
 
-/* CTA SERVIÇOS */
+/* CTA */
 
 .servico-cta {
     margin-top: 30px;
@@ -548,7 +552,8 @@ button {
 .servico-cta:hover {
     transform: translateY(-4px);
 
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .servico-cta span {
@@ -675,6 +680,7 @@ button {
 
 .controles-carrossel {
     display: flex;
+
     gap: 10px;
 }
 
@@ -755,9 +761,6 @@ button {
 .slide:hover img {
     transform: scale(1.03);
 }
-
-
-/* CONTADOR */
 
 .contador-carrossel {
     margin-top: 24px;
@@ -1174,10 +1177,12 @@ footer {
 
     .servicos-layout {
         grid-template-columns: 1fr;
+
+        gap: 35px;
     }
 
     .servicos-imagem {
-        min-height: 480px;
+        min-height: 430px;
     }
 
     .passos {
@@ -1197,7 +1202,8 @@ footer {
     }
 
     .slide {
-        flex-basis: calc((100% - 18px) / 2);
+        flex-basis:
+            calc((100% - 18px) / 2);
 
         height: 310px;
     }
@@ -1225,71 +1231,288 @@ footer {
 @media (max-width: 600px) {
 
     html {
-        scroll-padding-top: 175px;
+        scroll-padding-top: 150px;
+    }
+
+
+    /* CABEÇALHO */
+
+    .cabecalho-conteudo {
+        gap: 8px;
+
+        padding: 8px 0 11px;
     }
 
     .marca-texto {
         display: none;
     }
 
+    .logo-imagem {
+        width: 58px;
+        height: 58px;
+    }
+
     .menu {
-        flex-wrap: wrap;
+        width: 100%;
 
-        justify-content: center;
+        gap: 6px;
+
+        flex-wrap: nowrap;
+
+        justify-content: space-between;
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
     }
 
-    .menu a {
-        font-size: 11px;
-    }
-
-    .inicio {
-        padding: 70px 18px;
-
-        min-height: 72vh;
-    }
-
-    .inicio h1 {
-        font-size: 38px;
-
-        letter-spacing: -1px;
-    }
-
-    .texto-inicio {
-        font-size: 15px;
-    }
-
-    .servicos-premium {
-        padding: 80px 0;
-    }
-
-    .servicos-layout {
-        gap: 30px;
-    }
-
-    .servicos-imagem {
-        min-height: 370px;
-    }
-
-    .servico-linha {
-        grid-template-columns: 35px 1fr 25px;
-
-        gap: 10px;
-
-        padding: 21px 0;
-    }
-
-    .servico-linha p {
+    .menu::-webkit-scrollbar {
         display: none;
     }
 
+    .menu a {
+        white-space: nowrap;
+
+        font-size: 10px;
+
+        padding: 5px;
+    }
+
+
+    /* HERO */
+
+    .inicio {
+        min-height: 68vh;
+
+        padding: 65px 20px;
+    }
+
+    .destaque {
+        font-size: 9px;
+
+        letter-spacing: 2.5px;
+    }
+
+    .inicio h1 {
+        font-size: 36px;
+
+        line-height: 1.05;
+
+        letter-spacing: -1.3px;
+    }
+
+    .texto-inicio {
+        font-size: 14px;
+    }
+
+    .botoes-inicio {
+        width: 100%;
+    }
+
+    .botao-principal,
+    .botao-secundario {
+        flex: 1;
+
+        min-width: 145px;
+    }
+
+
+    /* =====================================
+       SERVIÇOS MOBILE
+    ====================================== */
+
+    .servicos-premium {
+        padding: 70px 0 80px;
+    }
+
+    .servicos-topo {
+        margin-bottom: 30px;
+
+        gap: 15px;
+    }
+
+    .servicos-topo h2 {
+        font-size: 35px;
+
+        line-height: 1.05;
+
+        letter-spacing: -1.3px;
+    }
+
+    .servicos-topo > p {
+        font-size: 13px;
+    }
+
+    .servicos-layout {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 18px;
+    }
+
+
+    /*
+       FOTO MENOR E FIXA
+       ENQUANTO O USUÁRIO NAVEGA
+    */
+
+    .servicos-imagem {
+        position: sticky;
+
+        top: 128px;
+
+        z-index: 20;
+
+        min-height: 0;
+        height: 230px;
+
+        border-radius: 5px;
+
+        box-shadow:
+            0 10px 30px
+            rgba(0, 0, 0, 0.14);
+    }
+
+    .servicos-imagem img {
+        height: 230px;
+
+        object-fit: cover;
+
+        object-position: center;
+    }
+
+    .servicos-imagem-legenda {
+        left: 17px;
+        bottom: 15px;
+    }
+
+    .servicos-imagem-legenda span {
+        font-size: 8px;
+    }
+
+    .servicos-imagem-legenda strong {
+        font-size: 14px;
+    }
+
+
+    /*
+       LISTA COMO BOTÕES
+    */
+
+    .servicos-lista {
+        border-top: none;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 7px;
+    }
+
+    .servico-linha {
+        grid-template-columns:
+            32px 1fr 25px;
+
+        gap: 8px;
+
+        align-items: center;
+
+        min-height: 72px;
+
+        padding: 15px 14px;
+
+        background: #ffffff;
+
+        border: 1px solid #dddddd;
+
+        border-radius: 4px;
+    }
+
+    .servico-linha:hover {
+        padding-left: 14px;
+    }
+
+    .servico-linha.ativo {
+        padding-left: 14px;
+
+        background: #0b0b0b;
+
+        color: #ffffff;
+
+        border-color: #0b0b0b;
+    }
+
+    .servico-linha.ativo
+    .servico-numero {
+        color: #8b8b8b;
+    }
+
+    .servico-linha.ativo p {
+        color: #bdbdbd;
+    }
+
     .servico-linha h3 {
+        font-size: 16px;
+
+        line-height: 1.2;
+    }
+
+    .servico-linha p {
+        display: block;
+
+        margin-top: 4px;
+
+        font-size: 11px;
+
+        line-height: 1.45;
+    }
+
+    .servico-numero {
+        font-size: 9px;
+    }
+
+    .servico-seta {
         font-size: 17px;
     }
 
+
+    /* CTA */
+
     .servico-cta {
+        margin-top: 12px;
+
+        min-height: 0;
+
+        padding: 24px;
+
         align-items: flex-start;
 
         flex-direction: column;
+
+        gap: 22px;
+    }
+
+    .servico-cta h3 {
+        font-size: 20px;
+    }
+
+
+    /* COMO FUNCIONA */
+
+    .como-funciona {
+        padding: 75px 0;
+    }
+
+    .passo {
+        padding: 28px 12px;
+    }
+
+
+    /* CARROSSEL */
+
+    .trabalhos {
+        padding: 80px 0 65px;
     }
 
     .titulo-trabalhos {
@@ -1302,24 +1525,74 @@ footer {
         align-self: flex-end;
     }
 
+    .botao-carrossel {
+        width: 47px;
+        height: 47px;
+    }
+
     .slide {
         flex-basis: 86%;
 
         height: 300px;
     }
 
-    .capa-card img,
+
+    /* CAPAS */
+
+    .capas {
+        padding: 80px 0;
+    }
+
+    .capa-card img {
+        height: 300px;
+    }
+
+
+    /* HIGIENIZAÇÃO */
+
+    .higienizacao-real {
+        padding: 80px 0;
+    }
+
     .foto-resultado {
-        height: 320px;
+        height: 300px;
+    }
+
+
+    /* GARANTIA */
+
+    .garantia {
+        padding: 75px 0;
     }
 
     .garantia-numero strong {
-        font-size: 61px;
+        font-size: 60px;
+    }
+
+
+    /* ATENDIMENTO */
+
+    .atendimento {
+        padding: 70px 0;
     }
 
     .atendimento-box {
-        padding: 32px 24px;
+        padding: 30px 23px;
     }
+
+
+    /* CONTATO */
+
+    .contato {
+        padding: 75px 0;
+    }
+
+    .contato-links {
+        width: 100%;
+    }
+
+
+    /* RODAPÉ */
 
     .rodape {
         flex-direction: column;
@@ -1327,12 +1600,15 @@ footer {
         align-items: flex-start;
     }
 
+
+    /* WHATSAPP */
+
     .whatsapp-flutuante {
         width: 54px;
         height: 54px;
 
-        right: 18px;
-        bottom: 18px;
+        right: 17px;
+        bottom: 17px;
     }
 
     .whatsapp-flutuante i {
