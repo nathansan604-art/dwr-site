@@ -2,10 +2,14 @@
 // ANO AUTOMÁTICO
 // ==========================================
 
-const ano = document.getElementById("ano");
+const ano =
+    document.getElementById("ano");
 
 if (ano) {
-    ano.textContent = new Date().getFullYear();
+
+    ano.textContent =
+        new Date().getFullYear();
+
 }
 
 
@@ -13,26 +17,32 @@ if (ano) {
 // CABEÇALHO
 // ==========================================
 
-const cabecalho = document.querySelector(".cabecalho");
+const cabecalho =
+    document.querySelector(".cabecalho");
 
-window.addEventListener("scroll", () => {
 
-    if (!cabecalho) {
-        return;
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (!cabecalho) {
+            return;
+        }
+
+        if (window.scrollY > 40) {
+
+            cabecalho.style.boxShadow =
+                "0 8px 25px rgba(0, 0, 0, 0.22)";
+
+        } else {
+
+            cabecalho.style.boxShadow =
+                "none";
+
+        }
+
     }
-
-    if (window.scrollY > 40) {
-
-        cabecalho.style.boxShadow =
-            "0 8px 25px rgba(0, 0, 0, 0.22)";
-
-    } else {
-
-        cabecalho.style.boxShadow = "none";
-
-    }
-
-});
+);
 
 
 // ==========================================
@@ -40,92 +50,264 @@ window.addEventListener("scroll", () => {
 // ==========================================
 
 const linksInternos =
-    document.querySelectorAll('a[href^="#"]');
+    document.querySelectorAll(
+        'a[href^="#"]'
+    );
+
 
 linksInternos.forEach(link => {
 
-    link.addEventListener("click", function(event) {
+    link.addEventListener(
+        "click",
+        function(event) {
 
-        const id = this.getAttribute("href");
+            const id =
+                this.getAttribute("href");
 
-        if (!id || id === "#") {
-            return;
+            if (
+                !id ||
+                id === "#"
+            ) {
+                return;
+            }
+
+
+            const destino =
+                document.querySelector(id);
+
+
+            if (destino) {
+
+                event.preventDefault();
+
+                destino.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            }
+
         }
-
-        const destino =
-            document.querySelector(id);
-
-        if (destino) {
-
-            event.preventDefault();
-
-            destino.scrollIntoView({
-                behavior: "smooth"
-            });
-
-        }
-
-    });
+    );
 
 });
 
 
 // ==========================================
-// SERVIÇOS - TROCA DE IMAGEM
+// SERVIÇOS
+// PC + CELULAR
 // ==========================================
 
 const linhasServico =
-    document.querySelectorAll(".servico-linha");
+    document.querySelectorAll(
+        ".servico-linha"
+    );
 
 const imagemServico =
-    document.getElementById("imagem-servico");
+    document.getElementById(
+        "imagem-servico"
+    );
 
 const areaImagem =
-    document.querySelector(".servicos-imagem");
+    document.querySelector(
+        ".servicos-imagem"
+    );
 
+
+function trocarImagemServico(
+    linha
+) {
+
+    if (
+        !linha ||
+        !imagemServico
+    ) {
+        return;
+    }
+
+
+    const novaImagem =
+        linha.dataset.imagem;
+
+
+    if (!novaImagem) {
+        return;
+    }
+
+
+    // Remove ativo de todos
+    linhasServico.forEach(item => {
+
+        item.classList.remove(
+            "ativo"
+        );
+
+    });
+
+
+    // Marca serviço escolhido
+    linha.classList.add(
+        "ativo"
+    );
+
+
+    // Se for a mesma imagem
+    // não precisa trocar
+    if (
+        imagemServico.getAttribute("src")
+        === novaImagem
+    ) {
+        return;
+    }
+
+
+    // Efeito suave
+    if (areaImagem) {
+
+        areaImagem.classList.add(
+            "trocando"
+        );
+
+    }
+
+
+    setTimeout(
+        () => {
+
+            imagemServico.src =
+                novaImagem;
+
+
+            imagemServico.onload =
+                () => {
+
+                    if (areaImagem) {
+
+                        areaImagem.classList.remove(
+                            "trocando"
+                        );
+
+                    }
+
+                };
+
+
+            // Segurança caso esteja
+            // carregada no cache
+            setTimeout(
+                () => {
+
+                    if (areaImagem) {
+
+                        areaImagem.classList.remove(
+                            "trocando"
+                        );
+
+                    }
+
+                },
+                350
+            );
+
+        },
+        150
+    );
+
+}
+
+
+// ==========================================
+// PRIMEIRA IMAGEM CORRETA
+// ==========================================
+
+if (
+    linhasServico.length > 0 &&
+    imagemServico
+) {
+
+    const primeiro =
+        linhasServico[0];
+
+    const imagemInicial =
+        primeiro.dataset.imagem;
+
+    if (imagemInicial) {
+
+        imagemServico.src =
+            imagemInicial;
+
+    }
+
+}
+
+
+// ==========================================
+// EVENTOS DOS SERVIÇOS
+// ==========================================
 
 linhasServico.forEach(linha => {
 
-    linha.addEventListener("mouseenter", () => {
 
-        const novaImagem =
-            linha.dataset.imagem;
+    // COMPUTADOR
 
-        linhasServico.forEach(item => {
-            item.classList.remove("ativo");
-        });
+    linha.addEventListener(
+        "mouseenter",
+        () => {
 
-        linha.classList.add("ativo");
+            if (
+                window.innerWidth > 950
+            ) {
 
+                trocarImagemServico(
+                    linha
+                );
 
-        if (
-            imagemServico &&
-            novaImagem &&
-            imagemServico.getAttribute("src") !== novaImagem
-        ) {
-
-            if (areaImagem) {
-                areaImagem.classList.add("trocando");
             }
 
+        }
+    );
 
-            setTimeout(() => {
 
-                imagemServico.src = novaImagem;
+    // CELULAR / TABLET / PC
 
-                if (areaImagem) {
+    linha.addEventListener(
+        "click",
+        () => {
 
-                    areaImagem.classList.remove(
-                        "trocando"
-                    );
-
-                }
-
-            }, 180);
+            trocarImagemServico(
+                linha
+            );
 
         }
+    );
 
-    });
+
+    // ACESSIBILIDADE
+
+    linha.setAttribute(
+        "tabindex",
+        "0"
+    );
+
+
+    linha.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Enter" ||
+                event.key === " "
+            ) {
+
+                event.preventDefault();
+
+                trocarImagemServico(
+                    linha
+                );
+
+            }
+
+        }
+    );
 
 });
 
@@ -135,22 +317,34 @@ linhasServico.forEach(linha => {
 // ==========================================
 
 const carrossel =
-    document.getElementById("carrossel");
+    document.getElementById(
+        "carrossel"
+    );
 
 const botaoAnterior =
-    document.getElementById("carrossel-anterior");
+    document.getElementById(
+        "carrossel-anterior"
+    );
 
 const botaoProximo =
-    document.getElementById("carrossel-proximo");
+    document.getElementById(
+        "carrossel-proximo"
+    );
 
 const paginaAtual =
-    document.getElementById("pagina-atual");
+    document.getElementById(
+        "pagina-atual"
+    );
 
 const totalPaginas =
-    document.getElementById("total-paginas");
+    document.getElementById(
+        "total-paginas"
+    );
 
 const slides =
-    document.querySelectorAll(".slide");
+    document.querySelectorAll(
+        ".slide"
+    );
 
 
 if (
@@ -158,11 +352,16 @@ if (
     slides.length > 0
 ) {
 
+
     if (totalPaginas) {
 
         totalPaginas.textContent =
-            String(slides.length)
-                .padStart(2, "0");
+            String(
+                slides.length
+            ).padStart(
+                2,
+                "0"
+            );
 
     }
 
@@ -170,12 +369,20 @@ if (
     function tamanhoSlide() {
 
         const estilos =
-            window.getComputedStyle(carrossel);
+            window.getComputedStyle(
+                carrossel
+            );
 
         const gap =
-            parseFloat(estilos.gap) || 0;
+            parseFloat(
+                estilos.gap
+            ) || 0;
 
-        return slides[0].offsetWidth + gap;
+
+        return (
+            slides[0].offsetWidth +
+            gap
+        );
 
     }
 
@@ -186,12 +393,15 @@ if (
             return;
         }
 
+
         const tamanho =
             tamanhoSlide();
+
 
         if (!tamanho) {
             return;
         }
+
 
         const indice =
             Math.round(
@@ -199,15 +409,21 @@ if (
                 tamanho
             );
 
+
         const atual =
             Math.min(
                 indice + 1,
                 slides.length
             );
 
+
         paginaAtual.textContent =
-            String(atual)
-                .padStart(2, "0");
+            String(
+                atual
+            ).padStart(
+                2,
+                "0"
+            );
 
     }
 
@@ -216,6 +432,7 @@ if (
 
         const tamanho =
             tamanhoSlide();
+
 
         const chegouNoFim =
             carrossel.scrollLeft +
@@ -226,15 +443,21 @@ if (
         if (chegouNoFim) {
 
             carrossel.scrollTo({
+
                 left: 0,
+
                 behavior: "smooth"
+
             });
 
         } else {
 
             carrossel.scrollBy({
+
                 left: tamanho,
+
                 behavior: "smooth"
+
             });
 
         }
@@ -248,18 +471,28 @@ if (
             tamanhoSlide();
 
 
-        if (carrossel.scrollLeft <= 5) {
+        if (
+            carrossel.scrollLeft <= 5
+        ) {
 
             carrossel.scrollTo({
-                left: carrossel.scrollWidth,
-                behavior: "smooth"
+
+                left:
+                    carrossel.scrollWidth,
+
+                behavior:
+                    "smooth"
+
             });
 
         } else {
 
             carrossel.scrollBy({
+
                 left: -tamanho,
+
                 behavior: "smooth"
+
             });
 
         }
@@ -306,14 +539,19 @@ if (
 
     function pararAutoplay() {
 
-        clearInterval(autoplay);
+        clearInterval(
+            autoplay
+        );
 
     }
 
 
     function iniciarAutoplay() {
 
-        clearInterval(autoplay);
+        clearInterval(
+            autoplay
+        );
+
 
         autoplay =
             setInterval(
@@ -336,33 +574,69 @@ if (
     );
 
 
+    // Quando tocar no celular,
+    // pausa temporariamente
+
+    carrossel.addEventListener(
+        "touchstart",
+        pararAutoplay,
+        {
+            passive: true
+        }
+    );
+
+
+    carrossel.addEventListener(
+        "touchend",
+        () => {
+
+            setTimeout(
+                iniciarAutoplay,
+                2000
+            );
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
     // ======================================
     // ARRASTAR COM O MOUSE
     // ======================================
 
-    let arrastando = false;
+    let arrastando =
+        false;
 
-    let inicioX = 0;
+    let inicioX =
+        0;
 
-    let scrollInicial = 0;
+    let scrollInicial =
+        0;
 
 
     carrossel.addEventListener(
         "mousedown",
-        (event) => {
+        event => {
 
-            arrastando = true;
+            arrastando =
+                true;
+
 
             carrossel.classList.add(
                 "arrastando"
             );
 
+
             inicioX =
                 event.pageX -
                 carrossel.offsetLeft;
 
+
             scrollInicial =
                 carrossel.scrollLeft;
+
 
             pararAutoplay();
 
@@ -378,11 +652,15 @@ if (
                 return;
             }
 
-            arrastando = false;
+
+            arrastando =
+                false;
+
 
             carrossel.classList.remove(
                 "arrastando"
             );
+
 
             iniciarAutoplay();
 
@@ -392,20 +670,27 @@ if (
 
     carrossel.addEventListener(
         "mousemove",
-        (event) => {
+        event => {
 
             if (!arrastando) {
                 return;
             }
 
+
             event.preventDefault();
+
 
             const x =
                 event.pageX -
                 carrossel.offsetLeft;
 
+
             const movimento =
-                (x - inicioX) * 1.3;
+                (
+                    x -
+                    inicioX
+                ) * 1.3;
+
 
             carrossel.scrollLeft =
                 scrollInicial -
@@ -415,7 +700,6 @@ if (
     );
 
 
-    // Atualiza contador inicialmente
     atualizarContador();
 
 }
